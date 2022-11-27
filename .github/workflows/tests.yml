@@ -1,0 +1,23 @@
+# .github/workflows/tests.yml
+name: Tests
+on: push
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.6", "3.7", "3.8", "3.9"]
+
+    steps:
+    - uses: actions/checkout@v2
+    #- name: Set up Python ${{ matrix.python-version }}
+    - uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+        architecture: x64
+    #- name: Display Python version
+    - run: python -c "import sys; print(sys.version)"
+    #- name: Run make [setup, check] 
+    - run: make setup
+    - run: make check
+    - run: bash <(curl -s https://codecov.io/bash)
