@@ -2,7 +2,7 @@ setup:
 	python3.8 -m venv .venv && . .venv/bin/activate
 	pip3 install --upgrade pip
 	pip3 install -r requirements.dev
-	pip3 install -r requirements.prod
+	pip3 install -r requirements.txt
 	pip3 install pytest==5.4.3
 
 clean-pyc:
