@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.6", "3.7", "3.8", "3.9"]
+        python-version: ["3.8"]
 
     steps:
     - uses: actions/checkout@v2
@@ -17,7 +17,11 @@ jobs:
         architecture: x64
     #- name: Display Python version
     - run: python -c "import sys; print(sys.version)"
-    #- name: Run make [setup, check] 
+    #- name: Run make [setup, check]
     - run: make setup
-    - run: make check
+    - run: make test
+    - run: make lint
+    - run: make mypy
+    - run: make format
+    - run: make clean
     - run: bash <(curl -s https://codecov.io/bash)
