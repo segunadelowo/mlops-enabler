@@ -1,7 +1,7 @@
 name: Retrain Model
 
 on:
-  schedule:
+  schedule1:
     - cron: '*/3 * * * *' #Execute every 6 hours
 
 jobs:
