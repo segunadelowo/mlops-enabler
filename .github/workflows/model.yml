@@ -3,7 +3,6 @@ name: Retrain Model
 on:
   schedule:
     - cron: '*/5 * * * *' #Execute every 6 hours
-  workflow_dispatch:
 
 jobs:
   build:
