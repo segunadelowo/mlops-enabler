@@ -1,27 +1,35 @@
-# .github/workflows/tests.yml
-name: Tests
-on: push
+name: Python package
+
+on: [push]
+
 jobs:
-  tests:
+  build:
+
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.8"]
+        python-version: ["3.7"]
 
     steps:
-    - uses: actions/checkout@v2
-    #- name: Set up Python ${{ matrix.python-version }}
-    - uses: actions/setup-python@v1
-      with:
-        python-version: ${{ matrix.python-version }}
-        architecture: x64
-    #- name: Display Python version
-    - run: python -c "import sys; print(sys.version)"
-    #- name: Run make [setup, check]
-    - run: make setup
-    - run: make test
-    - run: make lint
-    - run: make mypy
-    - run: make format
-    - run: make clean
-    - run: bash <(curl -s https://codecov.io/bash)
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
+          pip install -r requirements.dev
+      - name: Apply ISORT to project
+        run: |
+          # 
+          isort ./src/*.py -c -v
+      - name: Apply Black to project
+        run: |
+          # 
+          black ./src/*.py
+              
+      - name: Test with pytest
+        run: |
+          pytest
